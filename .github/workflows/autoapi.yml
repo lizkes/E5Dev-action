@@ -1,4 +1,4 @@
-#每小时调用一次（周日不启动）
+#北京时间8-16时每小时调用一次（周日不启动）
 name: Auto Api Pro
 
 on: 
@@ -10,7 +10,7 @@ on:
   #  branches: 
   #    - master
   schedule:
-    - cron: '0 * * * 1-6'
+    - cron: '0 0,1,2,3,4,5,6,7,8, * * 1-6'
   watch:
     types: [started]
    
