@@ -9,11 +9,12 @@ import random
 app_num = int(os.getenv('APP_NUM', 1))
 access_token_list = []
 # 配置选项，自由选择
-config_list = {'运行轮数': random.randint(0, 5),
-               '每轮随机延迟': random.randint(0, 3000),
-               'api随机延时': random.randint(0, 60),
-               '账号随机延时': 0,
-               }
+config_list = {
+    '运行轮数': random.randint(0, 5),
+    '每轮随机延迟': random.randint(0, 3000),
+    'api随机延时': random.randint(0, 60),
+    '账号随机延时': 0,
+}
 # '是否开启备用应用':'N','是否开启测试':'N'
 api_list = [r'https://graph.microsoft.com/v1.0/me/',
             r'https://graph.microsoft.com/v1.0/users',
@@ -66,8 +67,8 @@ def getmstoken(ms_token, app_index):
     else:
         print(f'应用 {str(app_index+1)} 的微软密钥获取失败\n \
                 请检查secret里 CLIENT_ID , CLIENT_SECRET , MS_TOKEN 格式与内容是否正确，然后重新设置')
-    #refresh_token = jsontxt['refresh_token']
-    access_token = jsontxt['access_token']
+    #refresh_token = jsontxt["refresh_token"]
+    access_token = jsontxt["access_token"]
     return access_token
 
 # 调用函数
@@ -81,8 +82,8 @@ def runapi(run_api_list, app_index):
         try:
             if req.get(api_list[run_api], headers=headers).status_code == 200:
                 print(f'第 {str(run_api)} 号api调用成功')
-                if config_list['api随机延时'] != 0:
-                    time.sleep(config_list['api随机延时'])
+                if config_list["api随机延时"] != 0:
+                    time.sleep(config_list["api随机延时"])
         except req.exceptions.RequestException as e:
             print(f'错误, {e}')
             pass
@@ -112,24 +113,24 @@ def rollapi():
     return fixed_api
 
 # 实际运行
-print('共 '+str(app_num)+r' 应用，'+r'每个应用运行'+str(config_list['运行轮数'])+' 轮')
-for run_round in range(0, config_list['运行轮数']):
-    if config_list['每轮随机延迟'] != 0:
-        time.sleep(config_list['每轮随机延迟'])
+print(f'共 {str(app_num)} 个应用，每个应用运行 {str(config_list["运行轮数"])} 轮')
+for run_round in range(0, config_list["运行轮数"]):
+    if config_list["每轮随机延迟"] != 0:
+        time.sleep(config_list["每轮随机延迟"])
     for app_index in range(0, app_num):
-        if config_list['账号随机延时'] != 0:
-            time.sleep(config_list['账号随机延时'])
+        if config_list["账号随机延时"] != 0:
+            time.sleep(config_list["账号随机延时"])
         if app_index == 0:
             client_id = os.getenv('CLIENT_ID')
             client_secret = os.getenv('CLIENT_SECRET')
             print(f'\n应用 {str(app_index+1)} 的第 {str(run_round+1)} 轮')
             run_api_list = rollapi()
             runapi(run_api_list, app_index)
-            print(f"本轮共运行{len(run_api_list)}个api")
+            print(f'本轮共运行{len(run_api_list)}个api')
         else:
             client_id = os.getenv('CLIENT_ID_'+str(app_index+1))
             client_secret = os.getenv('CLIENT_SECRET_'+str(app_index+1))
             print(f'\n应用 {str(app_index+1)} 的第 {str(run_round+1)} 轮')
             run_api_list = rollapi()
             runapi(run_api_list, app_index)
-            print(f"本轮运行{len(run_api_list)}个api")
+            print(f'本轮运行{len(run_api_list)}个api')
