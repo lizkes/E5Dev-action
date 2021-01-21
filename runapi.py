@@ -10,7 +10,7 @@ try:
     app_num = int(os.getenv('APP_NUM', 1))
 except ValueError:
     app_num = 1
-access_token_list = []
+access_token_list = [None] * app_num
 # 配置选项，自由选择
 config_list = {
     '运行轮数': random.randint(0, 5),
