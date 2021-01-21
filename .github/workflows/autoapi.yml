@@ -10,20 +10,24 @@ on:
   #  branches: 
   #    - master
   schedule:
-    - cron: '1 * * * 1-6'
+    - cron: '0 * * * 1-6'
   watch:
     types: [started]
    
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id  # 自己点的 start
     steps:
     - name: Checkout
       uses: actions/checkout@master
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+        architecture: 'x64'
     - name: Install requests and nacl #安装requests模块
       run: |
-        pip install requests
+        pip3 install requests
     - name: run api #api调用
       env: 
         #github的账号信息
@@ -40,4 +44,4 @@ jobs:
         #CLIENT_ID_n: ${{ secrets.CLIENT_ID_n }}
         #CLIENT_SECRET_n: ${{ secrets.CLIENT_SECRET_n }}
       run: |
-        python runapi.py
+        python3 runapi.py
