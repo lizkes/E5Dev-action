@@ -1,12 +1,15 @@
 # -*- coding: UTF-8 -*-
 import os
-import requests as req
 import json
 import sys
 import time
 import random
+import requests as req
 
-app_num = int(os.getenv('APP_NUM', 1))
+try:
+    app_num = int(os.getenv('APP_NUM', 1))
+except ValueError:
+    app_num = 1
 access_token_list = []
 # 配置选项，自由选择
 config_list = {
