@@ -14,9 +14,9 @@ access_token_list = [None] * app_num
 # 配置选项，自由选择
 config_list = {
     '运行轮数': random.randint(0, 5),
-    '每轮随机延迟': random.randint(0, 3000),
-    'api随机延时': random.randint(0, 60),
-    '账号随机延时': 0,
+    '每轮随机延迟': [0, 720],
+    'api随机延时': [0, 60],
+    '应用随机延时': None,
 }
 # '是否开启备用应用':'N','是否开启测试':'N'
 api_list = [r'https://graph.microsoft.com/v1.0/me/',
@@ -84,9 +84,10 @@ def runapi(run_api_list, app_index):
     for run_api in run_api_list:
         try:
             if req.get(api_list[run_api], headers=headers).status_code == 200:
-                print(f'第 {str(run_api)} 号api调用成功')
-                if config_list["api随机延时"] != 0:
-                    time.sleep(config_list["api随机延时"])
+                if config_list["api随机延时"]:
+                    api_delay = rolldelay(config_list["api随机延时"])
+                    print(f'第 {str(run_api)} 号api延迟 {str(api_delay)} 秒')
+                    time.sleep(api_delay)
         except req.exceptions.RequestException as e:
             print(f'错误, {e}')
             pass
@@ -115,14 +116,22 @@ def rollapi():
     random.shuffle(fixed_api)
     return fixed_api
 
+def rolldelay(delay_list):
+    return random.randint(delay_list[0], delay_list[1])
+
 # 实际运行
 print(f'共 {str(app_num)} 个应用，每个应用运行 {str(config_list["运行轮数"])} 轮')
 for run_round in range(0, config_list["运行轮数"]):
-    if config_list["每轮随机延迟"] != 0:
-        time.sleep(config_list["每轮随机延迟"])
+    print(f'第 {str(run_round+1)} 轮')
+    if config_list["每轮随机延迟"]:
+        round_delay = rolldelay(config_list["每轮随机延迟"])
+        print(f'第 {str(run_round+1)} 轮延迟 {round_delay} 秒')
+        time.sleep(round_delay)
     for app_index in range(0, app_num):
-        if config_list["账号随机延时"] != 0:
-            time.sleep(config_list["账号随机延时"])
+        if config_list["应用随机延时"]:
+            app_delay = rolldelay(config_list["应用随机延时"])
+            print(f'应用 {str(app_index+1)} 延迟 {str(app_delay)} 秒')
+            time.sleep(app_delay)
         if app_index == 0:
             client_id = os.getenv('CLIENT_ID')
             client_secret = os.getenv('CLIENT_SECRET')
