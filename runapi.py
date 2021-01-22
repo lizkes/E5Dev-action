@@ -75,7 +75,8 @@ api_list = [
 # 微软access_token获取
 def getmstoken(ms_token, app_index):
     headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
     }
     data = {
         'grant_type': 'refresh_token',
@@ -102,7 +103,7 @@ def runapi(run_api_indexes, app_index):
     headers = {
         'Authorization': access_token,
         'Content-Type': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
     }
     for run_api_index in run_api_indexes:
         print(f'准备调用API: {api_list[run_api_index]}')
