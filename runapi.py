@@ -30,7 +30,7 @@ api_list = [
     r'https://graph.microsoft.com/v1.0/groups',
     r'https://graph.microsoft.com/v1.0/groups/delta?$select=displayName,description',
     # Outlook邮件
-    r'https://graph.microsoft.com/v1.0/me/messages?$filter=importance eq "high"',
+    r"https://graph.microsoft.com/v1.0/me/messages?$filter=importance eq 'high'",
     r'https://graph.microsoft.com/v1.0/me/outlook/masterCategories',
     r'https://graph.microsoft.com/v1.0/me/mailFolders/Inbox/messages/delta',
     # Outlook日历
@@ -43,7 +43,7 @@ api_list = [
     r'https://graph.microsoft.com/v1.0/me/drive/root',
     r'https://graph.microsoft.com/v1.0/me/drive/root/children',
     # Planner
-    r'https://graph.microsoft.com/v1.0/me/planner/tasks'
+    r'https://graph.microsoft.com/v1.0/me/planner/tasks',
     # 见解
     r'https://graph.microsoft.com/v1.0/me/insights/trending',
     # 人脉
@@ -59,7 +59,7 @@ api_list = [
     r'https://graph.microsoft.com/v1.0/sites/root',
     r'https://graph.microsoft.com/v1.0/sites/root/drives',
     # SharePoint列表
-    r'https://graph.microsoft.com/v1.0/sites/root/lists'
+    r'https://graph.microsoft.com/v1.0/sites/root/lists',
     # Microsoft Teams
     r'https://graph.microsoft.com/v1.0/me/joinedTeams',
     # 安全性
