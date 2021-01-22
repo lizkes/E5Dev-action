@@ -1,27 +1,7 @@
-# AutoApiP ———— E5自动续期
-AutoApi系列：~~AutoApi~~、AutoApiSecret、~~AutoApiSR、AutoApiS~~、AutoApiP
-
 ## 说明 ##
-* E5自动续期程序，但是**不保证续期**
-* 设置了**周六日(UTC时间)不启动**自动调用，周1-5每6小时自动启动一次 （修改看教程）
-
-### 相关 ###
-* AutoApiSecret：https://github.com/wangziyingwen/AutoApiSecret
-* **常见错误及解决办法/更新日志**：https://github.com/wangziyingwen/Autoapi-test
-   * P版错误说明已更新进程序，详细请运行后看action日志报告
-* 视频教程：
-   * B站：https://www.bilibili.com/video/BV185411n7Mq/
-
-## 步骤 ##
-* 准备工具：
-   * E5开发者账号（非个人/私人账号）
-   * rclone软件，[下载地址 rclone.org ](https://downloads.rclone.org/v1.53.3/rclone-v1.53.3-windows-amd64.zip)，(windows 64）
-   * 教程图片看不到请科学上网
-   
-* 步骤大纲：
-   * 微软方面的准备工作 （获取应用id、密码、密钥）
-   * GIHTHUB方面的准备工作  （获取Github密钥、设置secret）
-   * 调用api
+* E5自动续期程序
+* 996时间表，每小时启动一次
+* 每天24时更新一次refresh_token
    
 #### 微软方面的准备工作 ####
 
@@ -52,7 +32,7 @@ AutoApi系列：~~AutoApi~~、AutoApiSecret、~~AutoApiSR、AutoApiS~~、AutoApi
                 
                 Notes.ReadWrite.All、People.Read.All、Sites.ReadWrite.All、
                 
-                Tasks.ReadWrite、User.ReadWrite.All
+                Tasks.ReadWrite、User.ReadWrite.All、SecurityEvents.Read.All
     
     ![image](https://github.com/wangziyingwen/ImageHosting/blob/master/AutoApiP/creatapp5.png)
     
