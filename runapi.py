@@ -16,7 +16,7 @@ config_list = {
     '运行轮数': random.randint(0, 10),
     '每轮随机延迟': [0, 300],
     'API随机延时': [0, 30],
-    'API最少调用数量': 14,
+    'API最少调用数量': 16,
     '应用随机延时': None,
 }
 # https://developer.microsoft.com/zh-cn/graph/graph-explorer
@@ -28,7 +28,7 @@ api_list = [
     r'https://graph.microsoft.com/v1.0/users/delta?$select=displayName,givenName,surname',
     # 组
     r'https://graph.microsoft.com/v1.0/groups',
-    r'https://graph.microsoft.com/v1.0/me/transitiveMemberOf/microsoft.graph.group?$count=true',
+    r'https://graph.microsoft.com/v1.0/groups/delta?$select=displayName,description',
     # Outlook邮件
     r'https://graph.microsoft.com/v1.0/me/messages?$filter=importance eq "high"',
     r'https://graph.microsoft.com/v1.0/me/outlook/masterCategories',
@@ -67,8 +67,6 @@ api_list = [
     r'https://graph.microsoft.com/beta/security/secureScores?$top=5',
     # 应用程序
     r'https://graph.microsoft.com/v1.0/applications?$count=true',
-    # 合规性
-    r'https://graph.microsoft.com/beta/compliance/ediscovery/cases',
     # 微软代办
     r'https://graph.microsoft.com/v1.0/me/todo/lists',
     # 标识与访问
