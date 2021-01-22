@@ -13,7 +13,7 @@ except ValueError:
 access_token_list = [None] * app_num
 # 配置选项，自由选择
 config_list = {
-    '运行轮数': random.randint(0, 10),
+    '运行轮数': random.randint(1, 10),
     '每轮随机延迟': [0, 300],
     'API随机延时': [0, 30],
     'API最少调用数量': 16,
