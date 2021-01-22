@@ -27,7 +27,7 @@ jobs:
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
         CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
       run: |
-        python3 runapi.py
+        python3 -u runapi.py
   # 类推，N替换成数字，即可多应用并发
   # run_N:
   #   runs-on: ubuntu-20.04
@@ -50,4 +50,4 @@ jobs:
   #       CLIENT_ID_N: ${{ secrets.CLIENT_ID }}
   #       CLIENT_SECRET_N: ${{ secrets.CLIENT_SECRET }}
   #     run: |
-  #       python3 runapi.py
+  #       python3 -u runapi.py

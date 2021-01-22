@@ -80,21 +80,21 @@ def get_env_or_err(env):
 
 # 微软access_token获取
 def get_access_token():
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
-    }
-    data = {
-        'grant_type': 'refresh_token',
-        'refresh_token': get_env_or_err('MS_TOKEN'),
-        'client_id': get_env_or_err('CLIENT_ID'),
-        'client_secret': get_env_or_err('CLIENT_SECRET'),
-        'redirect_uri': 'http://localhost:53682/'
-    }
-    html = req.post(
-        'https://login.microsoftonline.com/common/oauth2/v2.0/token', data=data, headers=headers
+    response = req.post(
+        'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
+        },
+        data = {
+            'grant_type': 'refresh_token',
+            'refresh_token': get_env_or_err('MS_TOKEN'),
+            'client_id': get_env_or_err('CLIENT_ID'),
+            'client_secret': get_env_or_err('CLIENT_SECRET'),
+            'redirect_uri': 'http://localhost:53682/'
+        },
     )
-    jsontxt = json.loads(html.text)
+    jsontxt = json.loads(response.text)
     if 'access_token' in jsontxt:
         print(f'access_token获取成功')
     else:
@@ -103,11 +103,6 @@ def get_access_token():
 
 # 调用API
 def runapi(run_api_indexes):
-    headers = {
-        'Authorization': access_token,
-        'Content-Type': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
-    }
     for run_api_index in run_api_indexes:
         print(f'准备调用API: {api_list[run_api_index]}')
         if config_list['API随机延时']:
@@ -115,7 +110,14 @@ def runapi(run_api_indexes):
             print(f'本次API调用延迟 {str(api_delay)} 秒')
             time.sleep(api_delay)
         try:
-            response = req.get(api_list[run_api_index], headers=headers)
+            response = req.get(
+                api_list[run_api_index],
+                headers={
+                    'Authorization': access_token,
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
+                },
+            )
             if response.status_code == req.codes.ok:
                 print(f'API调用成功, 状态码:{response.status_code}')
             else:
