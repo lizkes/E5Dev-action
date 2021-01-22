@@ -103,11 +103,12 @@ def get_access_token():
 
 # 调用API
 def runapi(run_api_indexes):
-    for run_api_index in run_api_indexes:
-        print(f'准备调用API: {api_list[run_api_index]}')
+    for index, run_api_index in enumerate(run_api_indexes):
+        prefix_message = f'[{index}/{len(run_api_indexes)}]'
+        print(f'{prefix_message}准备调用API: {api_list[run_api_index]}')
         if config_list['API随机延时']:
             api_delay = rolldelay(config_list['API随机延时'])
-            print(f'本次API调用延迟 {str(api_delay)} 秒')
+            print(f'{prefix_message}本次API调用延迟 {str(api_delay)} 秒')
             time.sleep(api_delay)
         try:
             response = req.get(
@@ -119,11 +120,11 @@ def runapi(run_api_indexes):
                 },
             )
             if response.status_code == req.codes.ok:
-                print(f'API调用成功, 状态码:{response.status_code}')
+                print(f'{prefix_message}API调用成功, 状态码:{response.status_code}')
             else:
                 response.raise_for_status()
         except req.exceptions.RequestException as e:
-            print(f'API调用失败, {e}')
+            print(f'{prefix_message}API调用失败, {e}')
             pass
 
 # 随机生成要运行的API列表
@@ -142,7 +143,7 @@ def rolldelay(delay_list):
 access_token = get_access_token()
 print(f'本次运行 {str(config_list["运行轮数"])} 轮')
 for run_round in range(0, config_list['运行轮数']):
-    print(f'\n\n第 {str(run_round+1)} 轮启动')
+    print(f'\n第 {str(run_round+1)} 轮启动')
     if config_list['每轮随机延迟']:
         round_delay = rolldelay(config_list['每轮随机延迟'])
         print(f'本轮延迟 {round_delay} 秒')
@@ -150,4 +151,4 @@ for run_round in range(0, config_list['运行轮数']):
     run_api_indexes = rollapi()
     print(f'本轮该应用运行{len(run_api_indexes)}个api')
     runapi(run_api_indexes)
-    print(f'\n第 {str(run_round+1)} 轮结束')
+    print(f'第 {str(run_round+1)} 轮结束')
