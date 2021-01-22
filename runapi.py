@@ -6,11 +6,6 @@ import time
 import random
 import requests as req
 
-client_id = os.getenv('CLIENT_ID')
-client_secret = os.getenv('CLIENT_SECRET')
-ms_token = os.getenv('MS_TOKEN')
-access_token = getmstoken(ms_token)
-
 # 配置选项，自由选择
 config_list = {
     '运行轮数': random.randint(1, 10),
@@ -18,7 +13,9 @@ config_list = {
     'API随机延时': [0, 30],
     'API最少调用数量': 16,
 }
-# https://developer.microsoft.com/zh-cn/graph/graph-explorer
+
+# API列表
+# 参考https://developer.microsoft.com/zh-cn/graph/graph-explorer
 api_list = [
     # 开始使用
     r'https://graph.microsoft.com/v1.0/me',
@@ -72,17 +69,26 @@ api_list = [
     r'https://graph.microsoft.com/v1.0/applicationTemplates',
 ]
 
+# 获取环境变量，否则抛出错误
+def get_env_or_err(env):
+    result = os.getenv(env)
+    if result:
+        return result
+    else:
+        print(f'错误，无法获取到环境变量: {env}')
+        sys.exit(1)
+
 # 微软access_token获取
-def getmstoken(ms_token):
+def get_access_token():
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
     }
     data = {
         'grant_type': 'refresh_token',
-        'refresh_token': ms_token,
-        'client_id': client_id,
-        'client_secret': client_secret,
+        'refresh_token': get_env_or_err('MS_TOKEN'),
+        'client_id': get_env_or_err('CLIENT_ID'),
+        'client_secret': get_env_or_err('CLIENT_SECRET'),
         'redirect_uri': 'http://localhost:53682/'
     }
     html = req.post(
@@ -93,8 +99,7 @@ def getmstoken(ms_token):
         print(f'access_token获取成功')
     else:
         print(f'access_token获取失败\n请检查secret里 CLIENT_ID , CLIENT_SECRET , MS_TOKEN 格式与内容是否正确，然后重新设置')
-    access_token = jsontxt['access_token']
-    return access_token
+    return jsontxt['access_token']
 
 # 调用API
 def runapi(run_api_indexes):
@@ -132,6 +137,7 @@ def rolldelay(delay_list):
     return random.randint(delay_list[0], delay_list[1])
 
 # 实际运行
+access_token = get_access_token()
 print(f'本次运行 {str(config_list["运行轮数"])} 轮')
 for run_round in range(0, config_list['运行轮数']):
     print(f'\n\n第 {str(run_round+1)} 轮启动')
