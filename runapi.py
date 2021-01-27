@@ -104,7 +104,7 @@ def get_access_token():
 # 调用API
 def runapi(run_api_indexes):
     for index, run_api_index in enumerate(run_api_indexes):
-        prefix_message = f'[{index}/{len(run_api_indexes)}]'
+        prefix_message = f'[{index+1}/{len(run_api_indexes)}]'
         print(f'{prefix_message}准备调用API: {api_list[run_api_index]}')
         if config_list['API随机延时']:
             api_delay = rolldelay(config_list['API随机延时'])
