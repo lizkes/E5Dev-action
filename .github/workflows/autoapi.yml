@@ -1,5 +1,5 @@
 #每小时调用一次（996时间表）
-name: Auto Api Pro
+name: 微软E5续期
 
 on: 
   workflow_dispatch:
