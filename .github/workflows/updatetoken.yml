@@ -1,5 +1,5 @@
 #每天24时更新refresh_token
-name: Update Token
+name: 更新refresh_token
 
 on: 
   workflow_dispatch:
