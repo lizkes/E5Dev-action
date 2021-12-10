@@ -1,10 +1,10 @@
-#每小时调用一次（996时间表）
+#每三小时调用一次（996时间表）
 name: 微软E5续期
 
 on: 
   workflow_dispatch:
   schedule:
-    - cron: '0 1-13 * * 1-6'
+    - cron: '0 1-13/3 * * 1-6'
 jobs:
   run_1:
     runs-on: ubuntu-20.04
@@ -28,26 +28,3 @@ jobs:
         CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
       run: |
         python3 -u runapi.py
-  # 类推，N替换成数字，即可多应用并发
-  # run_N:
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@master
-  #   - name: Install Python3.9
-  #     uses: actions/setup-python@v2
-  #     with:
-  #       python-version: '3.9'
-  #       architecture: 'x64'
-  #   - name: Install requests and nacl #安装requests模块
-  #     run: |
-  #       pip3 install requests
-  #   - name: run api
-  #     env: 
-  #       GH_REPO: ${{ github.repository }}
-  #       GH_TOKEN: ${{ secrets.GH_TOKEN }} 
-  #       MS_TOKEN_N: ${{ secrets.MS_TOKEN }} 
-  #       CLIENT_ID_N: ${{ secrets.CLIENT_ID }}
-  #       CLIENT_SECRET_N: ${{ secrets.CLIENT_SECRET }}
-  #     run: |
-  #       python3 -u runapi.py
