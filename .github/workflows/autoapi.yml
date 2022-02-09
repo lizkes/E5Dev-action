@@ -1,10 +1,10 @@
-#每三小时调用一次（996时间表）
+#每四小时调用一次（996时间表）
 name: 微软E5续期
 
 on: 
   workflow_dispatch:
   schedule:
-    - cron: '0 1-13/3 * * 1-6'
+    - cron: '0 1-13/4 * * 1-6'
 jobs:
   run_1:
     runs-on: ubuntu-20.04
