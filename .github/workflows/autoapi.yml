@@ -28,3 +28,25 @@ jobs:
         CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
       run: |
         python3 -u runapi.py
+  run_2:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Install Python3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+        architecture: 'x64'
+    - name: Install requests and nacl #安装requests模块
+      run: |
+        pip3 install requests
+    - name: run api
+      env: 
+        GH_REPO: ${{ github.repository }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }} 
+        MS_TOKEN: ${{ secrets.MS_TOKEN_2 }} 
+        CLIENT_ID: ${{ secrets.CLIENT_ID_2 }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_2 }}
+      run: |
+        python3 -u runapi.py
