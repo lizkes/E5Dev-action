@@ -28,8 +28,8 @@ jobs:
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
         CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         #账号/应用2
-        MS_TOKEN_2: ${{ secrets.MS_TOKEN_2 }} 
-        CLIENT_ID_2: ${{ secrets.CLIENT_ID_2 }}
-        CLIENT_SECRET_2: ${{ secrets.CLIENT_SECRET_2 }}
+        #MS_TOKEN_2: ${{ secrets.MS_TOKEN_2 }} 
+        #CLIENT_ID_2: ${{ secrets.CLIENT_ID_2 }}
+        #CLIENT_SECRET_2: ${{ secrets.CLIENT_SECRET_2 }}
       run: |
         python updatetoken.py
