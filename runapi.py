@@ -8,65 +8,42 @@ import requests as req
 
 # 配置选项，自由选择
 config_list = {
-    '运行轮数': random.randint(1, 6),
-    '每轮随机延迟': [0, 300],
+    '运行轮数': random.randint(1, 3),
+    '每轮随机延迟': [0, 180],
     'API随机延时': [0, 30],
-    'API最少调用数量': 16,
+    'API最少调用数量': 4,
 }
 
 # API列表
 # 参考https://developer.microsoft.com/zh-cn/graph/graph-explorer
 api_list = [
-    # 开始使用
-    r'https://graph.microsoft.com/v1.0/me',
     # 用户
+    # User.ReadWrite.All
+    r'https://graph.microsoft.com/v1.0/me',
     r'https://graph.microsoft.com/v1.0/me/directReports',
-    r'https://graph.microsoft.com/v1.0/users/delta?$select=displayName,givenName,surname',
-    # 组
-    r'https://graph.microsoft.com/v1.0/groups',
-    r'https://graph.microsoft.com/v1.0/groups/delta?$select=displayName,description',
     # Outlook邮件
+    # Mail.ReadWrite
+    r'https://graph.microsoft.com/v1.0/me/messages',
     r"https://graph.microsoft.com/v1.0/me/messages?$filter=importance eq 'high'",
-    r'https://graph.microsoft.com/v1.0/me/outlook/masterCategories',
-    r'https://graph.microsoft.com/v1.0/me/mailFolders/Inbox/messages/delta',
     # Outlook日历
+    # Calendars.ReadWrite
     r'https://graph.microsoft.com/v1.0/me/calendars',
-    r'https://graph.microsoft.com/v1.0/me/events?$select=subject,body,bodyPreview,organizer,attendees,start,end,location',
     # 个人联系人
+    # Contacts.ReadWrite
     r'https://graph.microsoft.com/v1.0/me/contacts',
     # OneDrive
-    r'https://graph.microsoft.com/v1.0/me/drive',
-    r'https://graph.microsoft.com/v1.0/me/drive/root',
+    # Files.ReadWrite.All
+    r'https://graph.microsoft.com/v1.0/me/drive/recent',
     r'https://graph.microsoft.com/v1.0/me/drive/root/children',
-    # Planner
-    r'https://graph.microsoft.com/v1.0/me/planner/tasks',
-    # 见解
-    r'https://graph.microsoft.com/v1.0/me/insights/trending',
-    # 人脉
-    r'https://graph.microsoft.com/v1.0/me/people',
-    # 人员
-    r'https://graph.microsoft.com/v1.0/me/people/?$search=j',
-    # 拓展
-    r'https://graph.microsoft.com/v1.0/schemaExtensions',
     # OneNote
+    # Notes.ReadWrite.All
     r'https://graph.microsoft.com/v1.0/me/onenote/notebooks',
-    r'https://graph.microsoft.com/v1.0/me/onenote/pages',
-    # SharePoint网站
-    r'https://graph.microsoft.com/v1.0/sites/root',
-    r'https://graph.microsoft.com/v1.0/sites/root/drives',
-    # SharePoint列表
-    r'https://graph.microsoft.com/v1.0/sites/root/lists',
-    # Microsoft Teams
-    r'https://graph.microsoft.com/v1.0/me/joinedTeams',
-    # 安全性
-    r'https://graph.microsoft.com/v1.0/security/alerts?$top=1',
-    r'https://graph.microsoft.com/beta/security/secureScores?$top=5',
     # 应用程序
+    # Application.ReadWrite.All
     r'https://graph.microsoft.com/v1.0/applications?$count=true',
     # 微软代办
+    # Tasks.ReadWrite
     r'https://graph.microsoft.com/v1.0/me/todo/lists',
-    # 标识与访问
-    r'https://graph.microsoft.com/v1.0/applicationTemplates',
 ]
 
 # 获取环境变量，否则抛出错误
