@@ -1,10 +1,10 @@
-#每六天更新refresh_token
+#每天更新refresh_token
 name: 更新refresh_token
 
 on: 
   workflow_dispatch:
   schedule:
-    - cron: '0 16 */6 * *'
+    - cron: '13 16 * * *'
    
 jobs:
   build:
